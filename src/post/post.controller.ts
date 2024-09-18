@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { IPostService } from './i.post.service';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse, ApiOperation,
   ApiQuery,
@@ -27,6 +28,7 @@ import {
 
 @Controller('api/post')
 @ApiTags('post')
+@ApiBearerAuth()
 export class PostController {
   constructor(
     @Inject('IPostService')
@@ -69,14 +71,12 @@ export class PostController {
 
   @Get('/:id')
   @ApiOperation({ summary: 'get detail posts' })
-
   getPostDetail(@Param('id') id: number) {
     return this.IPostService.getDetailPost(id);
   }
 
   @Delete('/:id')
   @ApiOperation({ summary: 'delete posts' })
-
   removePostDetail(@Param('id') id: number) {
     return this.IPostService.removePost(id);
   }
