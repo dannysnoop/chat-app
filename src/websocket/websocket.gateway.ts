@@ -39,6 +39,10 @@ export class ChatGateway
 
     try {
       const tokenUserRedis = await this.redis.get(preUserToken(token));
+      if(!tokenUserRedis) {
+        client.disconnect(true);
+        return
+      }
       client.data.user = jwt.verify(tokenUserRedis, process.env.JWT_SECRET); // Attach the user data to the socket
     } catch (error) {
       client.disconnect(true);
